@@ -2,7 +2,7 @@ class InsufficientFundsError(Exception):
     def __init__(self, message = "The balance is insufficient") -> None:
         super().__init__(message)
 
-class BankAccount():
+class BankAccount:
 
     transaction_logs = []
 
@@ -99,12 +99,6 @@ class BankAccount():
         else:
             print("Invalid currency was given, avaible currencies are: USD, EUR, PLN")    
 
-
-
-
-
-    
-             
 
 
 
