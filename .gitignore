@@ -3,3 +3,4 @@ __pycache__/
 pandas-course/
 .ipynb_checkpoints/
 *.pyc
+.venv/
