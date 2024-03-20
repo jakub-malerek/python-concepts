@@ -41,4 +41,4 @@ def multiprocessing_generate(rows_per_batch,n_batches):
 
 
 if __name__ == "__main__":
-    multiprocessing_generate(10,3)
+    multiprocessing_generate(100,100)
