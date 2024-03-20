@@ -2,6 +2,7 @@ import requests
 import json
 import warnings
 from urllib3.exceptions import InsecureRequestWarning
+import pandas as pd
 
 
 warnings.filterwarnings("ignore", category=InsecureRequestWarning)
@@ -53,7 +54,9 @@ def person_info():
 
 
 
-def resource_info(base_url, *args,pages = 1):
+def resource_info(base_url, *args,pages = 1, to_df = False, display = False):
+
+   
 
     if base_url.endswith("/"):
     
@@ -70,12 +73,12 @@ def resource_info(base_url, *args,pages = 1):
                 data = data["results"]
 
                 chosen_data = [{k:v for k,v in obj.items()if k in args} for obj in data]
-
-                for obj in chosen_data:
-                    for key, info in obj.items():
-                        print(f"{key}: {info}")
-                    print("-------------------------------------------")
-            
+                if display:
+                    for obj in chosen_data:
+                        for key, info in obj.items():
+                            print(f"{key}: {info}")
+                        print("-------------------------------------------")
+                
             else:
                 print("exceeded ammount of pages")
                 break
@@ -87,19 +90,19 @@ def resource_info(base_url, *args,pages = 1):
 
         chosen_data = {k:v for k,v in data.items() if k in args}
 
+        if display:
+            for key, info in chosen_data.items():
+                print(f"{key}: {info}")
+            print("-------------------------------------------")
+        print("XDDDDDD43434366666666666664DDDD")
 
-        for key, info in chosen_data.items():
-            print(f"{key}: {info}")
-        print("-------------------------------------------")
+    if to_df:
+        if isinstance(chosen_data,list):
+            return pd.DataFrame(chosen_data)
+        return pd.DataFrame([chosen_data])
         
 
 
+if __name__ == "__main__":
+    result = resource_info("https://swapi.dev/api/people/1","name","birth_year","gender",to_df=True)
 
-resource_info("https://swapi.dev/api/people/2","name","birth_year","gender")
-
-
-
-
-
-
-# inspect_response("https://swapi.dev/api/people/?page=2")

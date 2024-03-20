@@ -1,9 +1,10 @@
 import pandas as pd
 import numpy as np
+import time
 
 df = pd.read_excel("../SampleData/SampleData.xlsx",sheet_name=1)
 
-def generate_data(rows):
+def generate_data(rows, mode = "a"):
     OrderDate = pd.date_range(df["OrderDate"].min(),df["OrderDate"].max())
     Region = df["Region"].unique()
     Rep = df["Rep"].unique()
@@ -27,7 +28,7 @@ def generate_data(rows):
     data["Total"] = data["Units"] * data["Unit Cost"]
 
 
-    data.to_csv("dummy_data.csv",mode="a",header=None)    
+    data.to_csv("dummy_data.csv",mode=mode,header=None)    
     
 import multiprocessing
 
@@ -41,4 +42,10 @@ def multiprocessing_generate(rows_per_batch,n_batches):
 
 
 if __name__ == "__main__":
-    multiprocessing_generate(100,100)
+    start = time.time()
+    multiprocessing_generate(10000000,10)
+    print("multi",time.time()-start)
+
+    start = time.time()
+    generate_data(100000000,mode="w")
+    print("no mulit",time.time()-start)
